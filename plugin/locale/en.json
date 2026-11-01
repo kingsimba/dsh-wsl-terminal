@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "WSL Terminal",
+    "description": "Ctrl+C copies a terminal selection and Ctrl+V pastes; Ctrl+` opens cmd.exe or the matching WSL distribution for the selected project."
+  }
+}

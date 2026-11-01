@@ -1,0 +1,5 @@
+- insert:
+    - id: wsl-terminal
+      name: '@local/dsh-wsl-terminal'
+      config:
+        shellName: 'Terminal (WSL / cmd)'

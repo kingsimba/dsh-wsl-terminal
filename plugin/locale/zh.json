@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "WSL 终端",
+    "description": "终端中 Ctrl+C 复制所选文本、Ctrl+V 粘贴；Ctrl+` 会为所选项目打开 cmd.exe 或对应的 WSL 发行版。"
+  }
+}
