@@ -17,18 +17,18 @@
  */
 
 window.__ModuleLoader__.load({
-  id: 'dsh-wsl-terminal',
+  id: "dsh-wsl-terminal",
   factory() {
-    const LAUNCHER_NAME = 'dsh-terminal-shell.exe';
+    const LAUNCHER_NAME = "dsh-terminal-shell.exe";
 
     function basename(path) {
-      if (typeof path !== 'string') return '';
-      const index = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
+      if (typeof path !== "string") return "";
+      const index = Math.max(path.lastIndexOf("/"), path.lastIndexOf("\\"));
       return path.slice(index + 1).toLowerCase();
     }
 
     function terminalRoot(node) {
-      return node instanceof Element ? node.closest('.xterm') : null;
+      return node instanceof Element ? node.closest(".xterm") : null;
     }
 
     function insideModal(node) {
@@ -39,19 +39,19 @@ window.__ModuleLoader__.load({
     }
 
     function terminalSelection(root) {
-      if (typeof DataTransfer !== 'function' || typeof ClipboardEvent !== 'function') return '';
+      if (typeof DataTransfer !== "function" || typeof ClipboardEvent !== "function") return "";
       const data = new DataTransfer();
       try {
-        const event = new ClipboardEvent('copy', {
+        const event = new ClipboardEvent("copy", {
           bubbles: true,
           cancelable: true,
           clipboardData: data,
         });
         root.dispatchEvent(event);
       } catch {
-        return '';
+        return "";
       }
-      return data.getData('text/plain') || '';
+      return data.getData("text/plain") || "";
     }
 
     async function writeClipboard(text) {
@@ -63,18 +63,18 @@ window.__ModuleLoader__.load({
       }
 
       const active = document.activeElement;
-      const area = document.createElement('textarea');
+      const area = document.createElement("textarea");
       area.value = text;
-      area.setAttribute('readonly', '');
-      area.style.position = 'fixed';
-      area.style.top = '0';
-      area.style.left = '-9999px';
-      area.style.opacity = '0';
+      area.setAttribute("readonly", "");
+      area.style.position = "fixed";
+      area.style.top = "0";
+      area.style.left = "-9999px";
+      area.style.opacity = "0";
       document.body.appendChild(area);
       area.focus();
       area.select();
       try {
-        document.execCommand('copy');
+        document.execCommand("copy");
       } catch {
         // Nothing else can be done without clipboard permission.
       }
@@ -100,7 +100,7 @@ window.__ModuleLoader__.load({
         !event.metaKey &&
         !event.altKey &&
         !event.shiftKey &&
-        (event.code === 'Backquote' || event.key === '`')
+        (event.code === "Backquote" || event.key === "`")
       );
     }
 
@@ -122,7 +122,7 @@ window.__ModuleLoader__.load({
               const shell = shells.find(
                 (candidate) => candidate && basename(candidate.path) === LAUNCHER_NAME,
               );
-              if (shell !== undefined && typeof shell.path === 'string') launcherPath = shell.path;
+              if (shell !== undefined && typeof shell.path === "string") launcherPath = shell.path;
               return launcherPath;
             } catch {
               return undefined;
@@ -150,7 +150,7 @@ window.__ModuleLoader__.load({
                 // The default shell profile still applies if the preference cannot be saved.
               }
             }
-            ctx.sidebarRight.openTabFromTarget('terminal', target);
+            ctx.sidebarRight.openTabFromTarget("terminal", target);
           });
         };
 
@@ -160,8 +160,8 @@ window.__ModuleLoader__.load({
           const root = terminalRoot(event.target);
 
           if (root !== null && isPlainModifier(event, mac)) {
-            const key = typeof event.key === 'string' ? event.key.toLowerCase() : '';
-            if (event.code === 'KeyC' || key === 'c') {
+            const key = typeof event.key === "string" ? event.key.toLowerCase() : "";
+            if (event.code === "KeyC" || key === "c") {
               const text = terminalSelection(root);
               if (text.length === 0) return;
               event.preventDefault();
@@ -169,11 +169,11 @@ window.__ModuleLoader__.load({
               void writeClipboard(text);
               return;
             }
-            if (event.code === 'KeyV' || key === 'v') {
+            if (event.code === "KeyV" || key === "v") {
               // xterm would turn Ctrl+V into a control character and cancel the
               // browser default. Suppress only its keydown handler so the
               // native paste event reaches xterm's hidden textarea.
-              const textarea = root.querySelector('textarea.xterm-helper-textarea');
+              const textarea = root.querySelector("textarea.xterm-helper-textarea");
               if (textarea !== null && document.activeElement !== textarea) {
                 textarea.focus({ preventScroll: true });
               }
@@ -185,14 +185,14 @@ window.__ModuleLoader__.load({
           if (isNewTerminal(event)) openTerminal(event);
         };
 
-        window.addEventListener('keydown', keydown, true);
+        window.addEventListener("keydown", keydown, true);
         return () => {
-          window.removeEventListener('keydown', keydown, true);
+          window.removeEventListener("keydown", keydown, true);
           lifetime.abort();
         };
-      }, 'wsl-terminal.keyboard');
+      }, "wsl-terminal.keyboard");
     }
 
-    return { inject: ['webTerminals', 'sidebarRight'], apply };
+    return { inject: ["webTerminals", "sidebarRight"], apply };
   },
 });

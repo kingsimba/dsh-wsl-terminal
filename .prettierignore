@@ -1,0 +1,5 @@
+# Vendored/derived files.
+node_modules/
+pnpm-lock.yaml
+.pnpm-store/
+*.md

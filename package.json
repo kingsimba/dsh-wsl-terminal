@@ -2,21 +2,14 @@
   "name": "dsh-wsl-terminal",
   "version": "1.0.0",
   "description": "Ctrl+C/Ctrl+V copy-paste and a WSL-aware Ctrl+` terminal launcher for DeepSeek Harness.",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kingsimba/dsh-wsl-terminal.git"
-  },
-  "homepage": "https://github.com/kingsimba/dsh-wsl-terminal#readme",
-  "bugs": {
-    "url": "https://github.com/kingsimba/dsh-wsl-terminal/issues"
-  },
   "type": "module",
   "main": "src/index.js",
   "exports": {
     ".": "./src/index.js",
     "./client": "./src/client.js",
     "./locale/*.json": "./locale/*.json",
-    "./icon": "./icon.svg"
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
   },
   "files": [
     "src",
@@ -29,6 +22,40 @@
     "shell/build.ps1",
     "shell/dsh-terminal-shell.exe"
   ],
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "node --test --test-isolation=none test/*.test.mjs",
+    "test:isolated": "node --test test/",
+    "verify": "pnpm run format:check && pnpm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kingsimba/dsh-wsl-terminal.git"
+  },
+  "homepage": "https://github.com/kingsimba/dsh-wsl-terminal#readme",
+  "bugs": {
+    "url": "https://github.com/kingsimba/dsh-wsl-terminal/issues"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "cordis",
+    "plugin",
+    "terminal",
+    "wsl",
+    "copy-paste"
+  ],
+  "author": "kingsimba",
+  "license": "MIT",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "dsh": ">=0.2.1-rc.3 <0.3.0",
+    "node": ">=22.8.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.0"
+  },
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
@@ -42,6 +69,5 @@
         "@deepseek-ai/dsh-client-shortcuts"
       ]
     }
-  },
-  "license": "MIT"
+  }
 }

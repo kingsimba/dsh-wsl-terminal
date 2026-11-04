@@ -1,4 +1,13 @@
+# Dependency and tool caches.
 node_modules/
+.cache/
+.pnpm-store/
+pnpm-debug.log*
+
+# Editor / OS noise
 *.log
 .DS_Store
 Thumbs.db
+
+# Runtime state some plugins write when this checkout is used as a workspace.
+.dsh/
