@@ -25,7 +25,7 @@ export const inject = ['terminalController'];
 
 function packageVersion() {
   try {
-    return JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8')).version;
+    return JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).version;
   } catch {
     return '0';
   }
@@ -40,7 +40,7 @@ function packageVersion() {
  * @returns the executable to hand to the terminal controller, or undefined.
  */
 function materializeLauncher(ctx) {
-  const bundled = fileURLToPath(new URL(`./shell/${LAUNCHER_NAME}`, import.meta.url));
+  const bundled = fileURLToPath(new URL(`../shell/${LAUNCHER_NAME}`, import.meta.url));
   if (!existsSync(bundled)) {
     ctx.logger.warn(`[wsl-terminal] launcher is missing: ${bundled}`);
     return undefined;

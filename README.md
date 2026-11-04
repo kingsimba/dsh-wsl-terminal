@@ -1,6 +1,6 @@
 # dsh-wsl-terminal
 
-A local DeepSeek Harness plugin that makes the Web right-sidebar terminal behave
+A DeepSeek Harness plugin that makes the Web right-sidebar terminal behave
 the way a normal Windows/WSL terminal does:
 
 1. **Ctrl+C / Ctrl+V** — Ctrl+C copies the terminal selection when there is one,
@@ -15,11 +15,15 @@ the way a normal Windows/WSL terminal does:
 
 ## Install
 
-The bundle is at [`plugin/`](plugin). Install it in the active profile with the
-Plugin Manager (`install_bundle` on the absolute `plugin` directory), or:
+```powershell
+dsh plugin --profile desktop add dsh-wsl-terminal
+```
+
+To install from a checkout instead, point the Plugin Manager (`install_bundle`)
+at the checkout root, or:
 
 ```powershell
-dsh plugin --profile desktop add C:\Users\kings\Documents\deepseek-harness\dsh-wsl-terminal\plugin
+dsh plugin --profile desktop add %USERPROFILE%\Documents\deepseek-harness\default-workspace\plugins\dsh-wsl-terminal
 ```
 
 After installation, **refresh the Web GUI once**. The Host half is live
@@ -74,23 +78,24 @@ when the bundled launcher changes.
 ## Layout
 
 ```
-plugin/
-  package.json           bundle + dsh.client manifest
-  cordis.patch.yml       inserts the wsl-terminal row
-  index.js               Host half: launcher copy + terminal shell profile
-  client.js              browser half: Ctrl+C / Ctrl+V / Ctrl+`
-  locale/{en,zh}.json    Plugin Manager metadata
-  icon.svg
-  shell/
-    DshTerminalShell.cs  native launcher source
-    dsh-terminal-shell.exe
-    build.ps1            rebuilds the exe with the inbox csc.exe
+.
+├─ src/
+│  ├─ index.js           Host half: launcher copy + terminal shell profile
+│  └─ client.js          browser half: Ctrl+C / Ctrl+V / Ctrl+`
+├─ shell/
+│  ├─ DshTerminalShell.cs  native launcher source
+│  ├─ dsh-terminal-shell.exe
+│  └─ build.ps1          rebuilds the exe with the inbox csc.exe
+├─ locale/{en,zh}.json   Plugin Manager metadata
+├─ cordis.patch.yml      inserts the wsl-terminal row
+├─ icon.svg
+└─ package.json          bundle + dsh.client manifest
 ```
 
 Rebuild the launcher with:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File plugin\shell\build.ps1
+powershell -ExecutionPolicy Bypass -File shell\build.ps1
 ```
 
 ## Verification
@@ -99,8 +104,8 @@ powershell -ExecutionPolicy Bypass -File plugin\shell\build.ps1
 - The copied launcher was exercised under a real ConPTY:
   - ordinary Windows directory → `cmd.exe`, Ctrl+C breaks a running command,
     the shell survives and accepts the next command;
-  - `\\wsl.localhost\Ubuntu-24.04\home\simba` → the distribution's bash, correct
-    `/home/simba` cwd;
+  - `\\wsl.localhost\Ubuntu-24.04\home\<user>` → the distribution's bash, correct
+    `/<user>` cwd;
   - a Windows-drive workspace registered with a distro/user → the distribution's
     bash at `/mnt/c/...`, running as the registered user;
   - Ctrl+C in WSL interrupts `sleep` and the shell survives.
@@ -111,5 +116,5 @@ powershell -ExecutionPolicy Bypass -File plugin\shell\build.ps1
 
 ## Uninstall
 
-Use the Plugin Manager `remove_bundle` for `@local/dsh-wsl-terminal`, then
+Use the Plugin Manager `remove_bundle` for `dsh-wsl-terminal`, then
 refresh the page. The copied launcher under `%LOCALAPPDATA%` can be deleted.

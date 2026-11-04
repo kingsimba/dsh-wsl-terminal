@@ -1,30 +1,30 @@
 {
-  "name": "@local/dsh-wsl-terminal",
+  "name": "dsh-wsl-terminal",
   "version": "1.0.0",
-  "private": true,
   "description": "Ctrl+C/Ctrl+V copy-paste and a WSL-aware Ctrl+` terminal launcher for DeepSeek Harness.",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/kingsimba/dsh-wsl-terminal.git"
+    "url": "git+https://github.com/kingsimba/dsh-wsl-terminal.git"
   },
   "homepage": "https://github.com/kingsimba/dsh-wsl-terminal#readme",
   "bugs": {
     "url": "https://github.com/kingsimba/dsh-wsl-terminal/issues"
   },
   "type": "module",
+  "main": "src/index.js",
   "exports": {
-    ".": "./index.js",
-    "./client": "./client.js",
+    ".": "./src/index.js",
+    "./client": "./src/client.js",
     "./locale/*.json": "./locale/*.json",
     "./icon": "./icon.svg"
   },
   "files": [
-    "index.js",
-    "client.js",
+    "src",
     "cordis.patch.yml",
     "locale/*.json",
     "icon.svg",
     "LICENSE",
+    "CHANGELOG.md",
     "shell/DshTerminalShell.cs",
     "shell/build.ps1",
     "shell/dsh-terminal-shell.exe"

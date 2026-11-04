@@ -17,7 +17,7 @@
  */
 
 window.__ModuleLoader__.load({
-  id: '@local/dsh-wsl-terminal',
+  id: 'dsh-wsl-terminal',
   factory() {
     const LAUNCHER_NAME = 'dsh-terminal-shell.exe';
 
